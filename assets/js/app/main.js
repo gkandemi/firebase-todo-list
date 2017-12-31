@@ -40,9 +40,24 @@ $(document).ready(function(){
 
                 $("#description").val('');
 
-
             })
 
+            var todoRef = firebase.database().ref().child("users/" + current_user).child("todos");
+            todoRef.on("value", function(snapshot){
+
+                var $parent = $(".todoList").children("tbody");
+
+                $parent.html('');
+
+                snapshot.forEach(function(item){
+
+                    var description_elem = "<td>" + item.val().description + "</td>";
+                    var completed = item.val().completed == true ? "checked" : "";
+                    var completed_elem = "<td><input type='checkbox' class='' " + completed + "/></td>";
+                    var removeBtn_elem = "<td><button class='btn btn-danger btn-block removeBtn'>Sil</button></td>";
+                    $parent.append("<tr>" + description_elem + completed_elem + removeBtn_elem + "</tr>");
+                })
+            })
 
         }
 
