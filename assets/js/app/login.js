@@ -11,4 +11,19 @@ $(document).ready(function(){
     firebase.initializeApp(config);
 
 
+    $("#loginBtn").click(function(){
+
+        var email = $("#email").val();
+        var password = $("#password").val();
+
+        firebase.auth().signInWithEmailAndPassword(email, password)
+            .then(function(){
+                window.location.href = "index.html";
+            }).catch(function(error){
+                alert(error.message);
+        })
+
+
+    })
+
 })
