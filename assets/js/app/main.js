@@ -10,10 +10,13 @@ $(document).ready(function(){
     };
     firebase.initializeApp(config);
 
+    var current_user = "";
 
     firebase.auth().onAuthStateChanged(function(user){
 
         if(user){
+
+            current_user = user.uid;
 
             $("#logout").click(function(){
 
@@ -21,6 +24,23 @@ $(document).ready(function(){
                     .then(function(){
                         window.location.href = "login.html";
                     })
+            })
+
+
+            $(".sendToFireBase").click(function(){
+
+                var description = $("#description").val();
+
+                firebase.database().ref().child("users").child(current_user).child("todos").push(
+                    {
+                        description : description,
+                        completed : false
+                    }
+                );
+
+                $("#description").val('');
+
+
             })
 
 
