@@ -54,7 +54,7 @@ $(document).ready(function(){
                     var completed = item.val().completed == true ? "checked" : "";
 
                     var description_elem = "<td>" + item.val().description + "</td>";
-                    var completed_elem = "<td><input type='checkbox' class='switchery-plugin' " + completed + "/></td>";
+                    var completed_elem = "<td><input data-key='" + item.key + "' type='checkbox' class='switchery-plugin' " + completed + "/></td>";
                     var removeBtn_elem = "<td><button data-key='" + item.key + "' class='btn btn-danger btn-block removeBtn'>Sil</button></td>";
 
                     $parent.append("<tr>" + description_elem + completed_elem + removeBtn_elem + "</tr>");
@@ -71,26 +71,27 @@ $(document).ready(function(){
 
                 var $key = $(this).data("key");
 
-                alert($key);
-
                 firebase.database().ref("users/" + current_user).child("todos").child($key).remove();
 
-
-
-
-
-
-
-
-
-                
-
-
-
-
-
-
             });
+
+
+            $("body").on("change", ".switchery-plugin", function(){
+
+                var $completed = $(this).prop("checked");
+
+                var $key = $(this).data("key");
+
+                firebase.database().ref("users/" + current_user).child("todos").child($key).child("completed").set($completed);
+
+
+
+
+
+
+
+            })
+
 
         }
 
