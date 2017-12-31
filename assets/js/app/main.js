@@ -18,6 +18,8 @@ $(document).ready(function(){
 
             current_user = user.uid;
 
+            $(".user-text").text(user.email);
+
             $("#logout").click(function(){
 
                 firebase.auth().signOut()
@@ -54,8 +56,8 @@ $(document).ready(function(){
                     var completed = item.val().completed == true ? "checked" : "";
 
                     var description_elem = "<td>" + item.val().description + "</td>";
-                    var completed_elem = "<td><input data-key='" + item.key + "' type='checkbox' class='switchery-plugin' " + completed + "/></td>";
-                    var removeBtn_elem = "<td><button data-key='" + item.key + "' class='btn btn-danger btn-block removeBtn'>Sil</button></td>";
+                    var completed_elem = "<td class='text-center'><input data-key='" + item.key + "' type='checkbox' class='switchery-plugin' " + completed + "/></td>";
+                    var removeBtn_elem = "<td class='text-center'><button data-key='" + item.key + "' class='btn btn-danger btn-block removeBtn'>Sil</button></td>";
 
                     $parent.append("<tr>" + description_elem + completed_elem + removeBtn_elem + "</tr>");
 
